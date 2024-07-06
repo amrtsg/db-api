@@ -30,6 +30,22 @@ app.get('/vehicles', async (req, res) => {
     }
 });
 
+// Route to add a new vehicle with parameters in the URL path
+app.post('/addvehicle/:userID/:model/:make', async (req, res) => {
+    const { userID, model, make } = req.params;
+
+    try {
+        const { rows } = await pool.query(
+            'INSERT INTO vehicles (UserID, Model, Make) VALUES ($1, $2, $3) RETURNING *',
+            [userID, model, make]
+        );
+        res.status(201).json(rows[0]);
+    } catch (err) {
+        console.error('Error executing query', err);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
 // Start server
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);

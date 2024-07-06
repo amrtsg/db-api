@@ -20,5 +20,6 @@ INSERT INTO Users (UserName) VALUES ('Alice'), ('Bob'), ('Charlie');
 INSERT INTO Vehicles (UserID, Model, Make) VALUES
     (1, 'Model S', 'Tesla'),
     (1, 'Camry', 'Toyota'),
-    (2, 'Accord', 'Honda');
+    (2, 'Accord', 'Honda'),
+    (2, 'Mustang', 'Ford');
 
