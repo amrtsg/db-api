@@ -14,8 +14,13 @@
 > curl http://localhost:3000/YOUR_ROUTE
 ```
 
-Available routes:
+## Available routes:
 
-
-```/users``` returns all users <br>
-```/vehicles``` returns all vehicles <br>
+Method | Route | Description |
+--- | --- | --- |
+GET | ```/users``` | Returns all users |
+GET | ```/vehicles``` | Returns all vehicles |
+POST | ```/addvehicle/:userID/:model/:make``` | Adds a vehicle |
+DELETE | ```/removevehicle/:vehicleID``` | Remnoves a vehicle |
+GET | ```/getprimary/:userID``` | Returns primary vehicle for userID |
+PUT | ```/setprimary/:userID/:vehicleID``` | Sets primary vehicle for userID |

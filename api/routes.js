@@ -46,6 +46,69 @@ app.post('/addvehicle/:userID/:model/:make', async (req, res) => {
     }
 });
 
+// Route to remove a vehicle
+app.delete('/removevehicle/:vehicleID', async (req, res) => {
+    const { vehicleID } = req.params;
+
+    try {
+        const { rowCount } = await pool.query(
+            'DELETE FROM vehicles WHERE VehicleID = $1',
+            [vehicleID]
+        );
+
+        if (rowCount === 0) {
+            return res.status(404).json({ message: 'Vehicle not found' });
+        }
+
+        res.status(200).json({ message: 'Vehicle removed successfully' });
+    } catch (err) {
+        console.error('Error executing query', err);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
+// Route to get the primary vehicle ID for a user
+app.get('/getprimary/:userID', async (req, res) => {
+    const { userID } = req.params;
+
+    try {
+        const { rows } = await pool.query(
+            'SELECT PrimaryVehicle FROM users WHERE UserID = $1',
+            [userID]
+        );
+        
+        if (rows.length === 0) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        
+        res.json({ primaryVehicleID: rows[0].primaryvehicle });
+    } catch (err) {
+        console.error('Error executing query', err);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
+// Route to set the primary vehicle for a user
+app.put('/setprimary/:userID/:vehicleID', async (req, res) => {
+    const { userID, vehicleID } = req.params;
+
+    try {
+        const { rowCount } = await pool.query(
+            'UPDATE users SET PrimaryVehicle = $1 WHERE UserID = $2',
+            [vehicleID, userID]
+        );
+
+        if (rowCount === 0) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.status(200).json({ message: 'Primary vehicle updated successfully' });
+    } catch (err) {
+        console.error('Error executing query', err);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
 // Start server
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
