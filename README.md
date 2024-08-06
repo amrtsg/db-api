@@ -21,6 +21,6 @@ Method | Route | Description |
 GET | ```/users``` | Returns all users |
 GET | ```/vehicles``` | Returns all vehicles |
 POST | ```/addvehicle/:userID/:model/:make``` | Adds a vehicle |
-DELETE | ```/removevehicle/:vehicleID``` | Remnoves a vehicle |
+DELETE | ```/removevehicle/:vehicleID``` | Removes a vehicle |
 GET | ```/getprimary/:userID``` | Returns primary vehicle for userID |
 PUT | ```/setprimary/:userID/:vehicleID``` | Sets primary vehicle for userID |
